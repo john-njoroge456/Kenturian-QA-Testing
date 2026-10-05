@@ -20,7 +20,6 @@ class BasePage:
     
     def find_all(self, locator):
         return self.wait.until(EC.presence_of_all_elements_located(locator))
-    from selenium.common.exceptions import TimeoutException
 
     def is_visible(self, locator, timeout=DEFAULT_TIMEOUT):
         try:
