@@ -16,19 +16,18 @@ def test_required_fields_reject_empty_submit(driver, base_url):
     name_message = page.get_field_validation_message(page.NAME_INPUT)
     assert name_message != "", "Expected a validation message on empty Name field"
 
-def test_message_field_has_no_max_length(driver, base_url):
-    """Documents a known bug: unlike Name/Email/Subject, the Message
-    textarea has no maxlength attribute, so it accepts unbounded input."""
+def test_message_field_has_max_length(driver, base_url):
+    """Message limited to 500 characters."""
     page = ContactPage(driver).load(base_url)
     message_element = page.find(page.MESSAGE_TEXTAREA)
-    assert message_element.get_attribute("maxlength") is None
+    assert message_element.get_attribute("maxlength") =="500"
 
 def test_office_info_panel_displays_contact_details(driver, base_url):
     page = ContactPage(driver).load(base_url)
     info_text = page.get_office_info_text()
     joined = " ".join(info_text)
     assert "Kajiado" in joined
-    assert "kenturianpaper@gmail.com" in joined
+    assert "info@kenturian.co.ke" in joined
 
 def test_office_info_panel_is_visible(driver, base_url):
     page = ContactPage(driver).load(base_url)
@@ -37,8 +36,8 @@ def test_office_info_panel_is_visible(driver, base_url):
 def test_contact_links_point_to_correct_targets(driver, base_url):
     page = ContactPage(driver).load(base_url)
     assert page.get_phone_href() == "tel:+254720044513"
-    assert page.get_whatsapp_href() == "https://wa.me/254795979982"
-    assert page.get_email_href() == "mailto:kenturianpaper@gmail.com"
+    assert page.get_whatsapp_href() == "https://wa.me/254725212181"
+    assert page.get_email_href() == "mailto:info@kenturian.co.ke"
 
 def test_map_is_present(driver, base_url):
     page = ContactPage(driver).load(base_url)

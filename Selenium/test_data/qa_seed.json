@@ -1,0 +1,17 @@
+[
+  {
+    "model": "main.jobposting",
+    "pk": 9001,
+    "fields": {
+      "title": "QA Test Role",
+      "department": "Quality Assurance",
+      "location": "Isinya",
+      "employment_type": "Contract",
+      "qualification": "diploma",
+      "description": "Automated test vacancy used by the Selenium suite. It is loaded from qa_seed.json before each test run and should never exist on the live site.",
+      "is_open": true,
+      "posted_at": "2026-10-01T09:00:00Z",
+      "created_at": "2026-10-01T09:00:00Z"
+    }
+  }
+] 

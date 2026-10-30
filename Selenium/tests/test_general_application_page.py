@@ -29,7 +29,7 @@ def test_required_fields_reject_empty_submit(driver, base_url):
 def test_email_field_has_max_length(driver, base_url):
     page = GeneralApplicationPage(driver).load(base_url)
     email_element = page.find(page.EMAIL_INPUT)
-    assert email_element.get_attribute("maxlength") == "320"
+    assert email_element.get_attribute("maxlength") == "254"
 
 
 def test_valid_application_shows_confirmation(driver, base_url):

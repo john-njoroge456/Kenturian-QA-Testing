@@ -1,7 +1,7 @@
 from pages.job_detail_page import JobDetailPage
 import os
 
-JOB_ID = 4
+JOB_ID = 9001
 CV_PATH = os.path.abspath("test_data/sample_cv.pdf")
 
 
@@ -9,7 +9,7 @@ def test_job_detail_page_loads(driver, base_url):
     """Needs job 4 ("Customer Service") in the local database."""
     page = JobDetailPage(driver).load(base_url, JOB_ID)
     assert page.is_visible(page.HERO_HEADING)
-    assert page.get_title() == "Customer Service"
+    assert page.get_title() == "QA Test Role"
 
 
 def test_key_details_show_job_information(driver, base_url):
@@ -39,7 +39,7 @@ def test_required_fields_reject_empty_submit(driver, base_url):
 def test_email_field_has_max_length(driver, base_url):
     page = JobDetailPage(driver).load(base_url, JOB_ID)
     email_element = page.find(page.EMAIL_INPUT)
-    assert email_element.get_attribute("maxlength") == "320"
+    assert email_element.get_attribute("maxlength") == "254"
 
 
 def test_back_link_returns_to_careers_page(driver, base_url):
