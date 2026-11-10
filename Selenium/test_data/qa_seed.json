@@ -13,5 +13,20 @@
       "posted_at": "2026-10-01T09:00:00Z",
       "created_at": "2026-10-01T09:00:00Z"
     }
+  },
+  {
+    "model": "main.newsarticle",
+    "pk": 9001,
+    "fields": {
+      "title": "QA Test Article",
+      "slug": "qa-test-article",
+      "excerpt": "",
+      "body": "Automated test article used by the Selenium suite. It is loaded from qa_seed.json before each test run and should never exist on the live site.",
+      "category": null,
+      "author": null,
+      "is_published": true,
+      "published_at": "2026-01-01T09:00:00Z",
+      "created_at": "2026-01-01T09:00:00Z"
+    }
   }
 ] 

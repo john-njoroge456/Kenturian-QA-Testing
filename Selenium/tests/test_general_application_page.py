@@ -16,6 +16,12 @@ def test_breadcrumb_links_are_displayed(driver, base_url):
     assert page.get_breadcrumb_texts() == ["Home", "Careers"]
 
 
+def test_careers_nav_link_is_active(driver, base_url):
+    """FX-21: the Careers nav link stays highlighted on the CV page."""
+    page = GeneralApplicationPage(driver).load(base_url)
+    assert page.get_active_nav_texts() == ["Careers"]
+
+
 def test_required_fields_reject_empty_submit(driver, base_url):
     """The form fields are marked required, so HTML5 constraint
     validation should block submission and report the empty Email field."""

@@ -1,3 +1,4 @@
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -7,6 +8,9 @@ class BasePage:
     """Shared setup and helpers for all page objects."""
 
     DEFAULT_TIMEOUT = 10
+
+    NAV_MENU = (By.ID, "navMain")
+    NAV_ACTIVE_LINKS = (By.CSS_SELECTOR, "#navMain .nav-link.active")
 
     def __init__(self, driver):
         self.driver = driver
@@ -29,7 +33,43 @@ class BasePage:
             return True
         except TimeoutException:
             return False
-    
+
+    def is_hidden(self, locator, timeout=3):
+        """Waits for the element to become hidden (or be removed).
+        is_visible can't answer this: it waits for the element to appear."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located(locator)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def type_into(self, locator, text):
+        """Types without clearing first, so the field fires an input event
+        the way a user editing it would."""
+        self.find(locator).send_keys(text)
+
+    def has_invalid_class(self, locator):
+        classes = self.find(locator).get_attribute("class") or ""
+        return "is-invalid" in classes.split()
+
+    def get_field_errors(self, locator):
+        """Texts of the server-side .field-error divs that follow the input.
+        Read immediately with no wait, so an empty list means none are there."""
+        element = self.find(locator)
+        errors = element.find_elements(
+            By.XPATH, "following-sibling::div[contains(concat(' ', normalize-space(@class), ' '), ' field-error ')]"
+        )
+        return [el.text.strip() for el in errors]
+
+    def get_active_nav_texts(self):
+        """Texts of the highlighted main-nav links. Read without waiting
+        once the nav exists, so an empty list means none is active."""
+        self.find(self.NAV_MENU)
+        links = self.driver.find_elements(*self.NAV_ACTIVE_LINKS)
+        return [el.text.strip() for el in links]
+
     def get_text(self, locator):
 
         return self.find(locator).text.strip()
